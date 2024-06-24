@@ -1,0 +1,5 @@
+dark blue: #27187E
+
+a bit lightger : #758BFD
+
+lightest blue: AEB8FE

@@ -1,0 +1,149 @@
+.main{
+    height:100vh;
+    width:100vw;
+    background-image: linear-gradient(to top,#AEB8FE, #758BFD);
+    font-size: calc(1vw + 1vh + 0.5vmin);
+    display: grid;
+    grid-template-rows: 0.18fr 0.7fr 0.1fr 0.02fr;
+    grid-template-columns: 0.02fr 0.08fr 0.3fr 0.05fr 0.2fr 0.30fr 0.05fr;
+}
+
+.home{
+    grid-area: 1/2/2/3;
+    height:50%;
+    width:50%;
+    align-self: center;
+}
+
+.home_img{
+    width:100%;
+    align-self: center;
+}
+
+.title{
+    grid-area: 1/4/2/6;
+    font-size: 3rem;
+    margin-top: 5%;
+    font-weight: 700;
+}
+
+.input_area{
+    grid-area:2/2/4/4;
+    background-color: #27187E;
+    border:0;
+    border-radius: 7.5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+}
+
+.myinput{
+    height:10%;
+    margin-top:5%;
+    margin-bottom:5%;
+    color:white;
+    max-width:50%;
+}
+
+.uploaded_files{
+    overflow-y: auto;
+    height:80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width:95%;
+    background-color: #758BFD;
+    margin-bottom: 5%;
+    align-items: center;
+    overflow-y: auto;
+}
+
+.files_btn{
+    height:20%;
+    width: 97%;
+    min-height: 20%;
+    background-color: rgba(137,255,255,0.5);
+    margin-top:2%;
+    display: flex;
+    justify-content: space-evenly;
+    border-radius: 25px;
+    border-bottom: 2px solid black;
+}
+.files_text{
+    padding:2% 5% 2% 5%;
+    width: 70%;
+    height: 100%;
+    overflow-x: auto;
+    font-size: 100%;
+}
+
+.move_btns_container{
+    height:90%;
+    display: flex;
+    flex-direction: column;
+    width:10%;
+    align-self: center;
+}
+
+.move_btns{
+    height:50%;
+    cursor: pointer;
+}
+
+
+.move_btns_img{
+    height:100%;
+}
+
+.trash_btn{
+    height:90%;
+    background-color: transparent;
+    align-self: center;
+    cursor: pointer;
+    border:0;
+}
+
+.trash_btn:active{
+    transform: scale(1.1);
+}
+
+.trash_img{
+    height:90%;
+    width:90%;
+}
+
+.merge_btn{
+    margin-top:2%;
+    margin-bottom: 2%;
+    height:5%;
+}
+
+.iframe_area{
+    grid-area: 2/5/3/7;
+    background-color: #27187E;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.my_iframe{
+    height:90%;
+    width:90%;
+    border:0;
+    border-radius: 15px;
+}
+
+.dwnd_btn{
+    grid-area:3/6/4/7;
+    margin-top: 5%;
+    width:20%;
+    height:50%;    
+}
+
+.dwnd_btn:hover{
+    transform: scale(1.05);
+}
+

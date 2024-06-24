@@ -1,0 +1,156 @@
+import React, { useReducer } from 'react'
+import styles from './MergePage.module.css'
+import { PDFDocument } from 'pdf-lib'
+
+const createBlob = async (pdfData) => {
+    const blobdata = new Blob([pdfData], { type: 'application/pdf' });
+    return blobdata;
+};
+
+async function mergepdfs(pdfs){
+try{    
+    console.log('reached here in mergepdfs function');
+    var resultPDF = await PDFDocument.create(); 
+    var files_buffer_array = [];
+    var pdf_loaded = [];
+    var i, j;
+    for(i=0;i<pdfs.length;i++){
+        var arr= [];//for the page numbers to be copied
+        files_buffer_array[i] = await pdfs[i].arrayBuffer(); // convert the file to readable array buffer
+        pdf_loaded[i] = await PDFDocument.load(files_buffer_array[i]);//load the array buffer as a file in pdf-lib
+        for(j=0;j<pdf_loaded[i].getPageCount();j++){//to get the array to pass when using Copy function
+            arr[j]=j;
+        }
+        console.log(arr.length);
+        const copiedPages = await resultPDF.copyPages(pdf_loaded[i], arr);
+        copiedPages.forEach((page) => {
+            resultPDF.addPage(page);
+        });
+    }
+    //save pdf
+    var pdf_arraybufferdata = await resultPDF.save();
+    // Convert the PDF data to a blob
+    const blobdata = await createBlob(pdf_arraybufferdata);
+    const url = URL.createObjectURL(blobdata);
+    return url;
+    }
+catch(error){
+    console.log(error);
+    }
+}
+
+//reducer function
+// the myFiles variable has a .data which is the file array itself , file_list with file names 
+// and an isFile so that we dont face null map error
+const File_Reducer = (state,action)=>{
+    switch(action.type){
+        case 'Input_changed':
+            console.log(action.payload);
+            var file_Array = Array.from(action.payload);
+            var new_list = file_Array.map((item)=>{return item.name});
+
+            //the if statement lets user use the input multiple times
+            if(state.file_list){
+                new_list = [...state.file_list ,  ...new_list];
+                file_Array = [...state.data, ...file_Array];//spread operators 
+            }
+
+            return {
+                ...state,
+                data: file_Array,
+                file_list : new_list,
+                isFile: true
+            }
+
+        case 'Merge':
+            console.log('Merge');
+            if (state.file_list) {
+                mergepdfs(state.data).then((pdfurl) => {
+                    console.log(pdfurl);
+                    return({
+                        ...state,
+                        url: pdfurl,
+                        isMerged: true
+                    });
+                }).catch((error) => {
+                    console.error('Merge failed:', error);
+                    
+                });
+            }
+            else{
+                alert('no files selected');
+                return state;
+            }
+    }
+}
+
+
+const MergePage = ()=>{
+    const [myFiles, setMyFiles] = React.useReducer(File_Reducer,[]);
+
+    const inputRef = React.useRef();//so that we can send the files using .current.files
+    
+
+    return(
+        <div className={styles.main}> {/*classname main */}   
+            {/*use link tag for home btn */}     
+            <img src='/assets/home2.png' alt='homebtn' className={styles.home_img}></img>{/*classname : home_img */}
+            <p className={styles.title}>PDF-MERGE</p>{/*classname: title */}
+            
+            <div className={styles.input_area}>
+                <input 
+                    ref={inputRef}
+                    className={styles.myinput}
+                    type='file' 
+                    accept='.pdf' 
+                    onChange={()=>setMyFiles({type:'Input_changed', payload:inputRef.current.files })}
+                    multiple>
+                </input>
+                {console.log(myFiles.isFile)}
+                {/*Set all files based on list */}
+                <div className={styles.uploaded_files}>
+                    {myFiles.isFile && myFiles.file_list.map((item,index)=> 
+                        <Individual_File 
+                            key={`${item}-${index}`} 
+                            item={item} 
+                        />
+                    )}
+                </div>
+                <button 
+                className={styles.merge_btn}
+                onClick={()=>setMyFiles({type:'Merge'})}
+                >
+                    Merge
+                </button>
+            </div>{/*classname:input_area*/}
+            
+            <div className={styles.iframe_area}>
+                {myFiles.isMerged && <My_Iframe url={myFiles.url}/>}
+            </div>{/*classname: iframe_area */}
+
+            <img src='/assets/dwnd.png' alt='download_btn' className={styles.dwnd_btn}></img> {/*dwnd_btn */}           
+        
+        </div>
+    )
+}
+
+const My_Iframe = ({url})=>{
+    console.log(url);
+    return(
+        <>
+            <iframe src={url} className={styles.my_iframe}></iframe>
+        </>
+    )
+}
+
+const Individual_File = (props)=>{
+    console.log('here');
+    return(
+        <div className={styles.files_btn}>
+            <p className={styles.files_text}>{props.item}</p>
+        </div>
+    )
+}
+
+export default MergePage //now you need not use {} while importing it
+
