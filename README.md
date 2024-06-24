@@ -11,12 +11,12 @@ The App works completely on the client side.
 
 Technologies Used:
 
-1.)React 
-2.)react-router-dom
-3.)pdf-lib 
-4.)Javascript
-5.)CSS
-6.)JSX 
+1.React 
+2.react-router-dom
+3.pdf-lib 
+4.Javascript
+5.CSS
+6.JSX 
 
 This is my first React project and eventhough i haven't made the styling anything special
 I am quite happy with its functionality.
