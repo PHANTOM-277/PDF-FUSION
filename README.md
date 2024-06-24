@@ -11,12 +11,12 @@ The App works completely on the client side.
 
 Technologies Used:
 
-1.React 
-2.react-router-dom
-3.pdf-lib 
-4.Javascript
-5.CSS
-6.JSX 
+React: Frontend library for building user interfaces.
+react-router-dom: Declarative routing for navigating within the application.
+pdf-lib: Library for PDF manipulation in JavaScript.
+JavaScript: Programming language for frontend logic.
+CSS: Styling the user interface.
+JSX: Syntax extension for JavaScript used with React.
 
 This is my first React project and eventhough i haven't made the styling anything special
 I am quite happy with its functionality.
