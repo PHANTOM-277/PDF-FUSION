@@ -4,7 +4,7 @@ PDF-FUSION is a small app developed to work around with pdf files.
 It lets the user merge and split pdfs.
 
 Key Features :
-1.) Merge Several Pdf files into one Pdf file
+1.) Merge Several Pdf files into one Pdf file  
 2.) Split one Pdf file into multiple Pdf files 
 
 The App works completely on the client side.
